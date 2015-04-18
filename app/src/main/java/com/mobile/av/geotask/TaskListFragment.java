@@ -9,7 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.mobile.av.geotask.adapters.TaskListArrayAdapter;
+import com.mobile.av.geotask.db.TaskDBOpenHelper;
 import com.mobile.av.geotask.db.TaskDataSource;
+import com.mobile.av.geotask.helper.InitialData;
 import com.mobile.av.geotask.model.Task;
 
 import java.util.List;
@@ -21,9 +23,25 @@ public class TaskListFragment extends ListFragment {
 
     TaskDataSource dataSource;
     List<Task> tasks;
-    OnListItemSelectedListener listItemSelectorCallback;
 
     public TaskListFragment() {
+    }
+
+    OnListItemSelectedListener listItemSelectorCallback;
+
+    // Interface to communicate with MainActivity for any items selected from list
+    public interface OnListItemSelectedListener{
+        public void onItemClicked(int position, Task task);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try{
+            listItemSelectorCallback = (OnListItemSelectedListener) activity;
+        }catch (ClassCastException e){
+            throw  new ClassCastException(activity.toString()+ " must implement OnListItemSelectedListener");
+        }
     }
 
     @Override
@@ -52,23 +70,14 @@ public class TaskListFragment extends ListFragment {
         return inflater.inflate(R.layout.task_list_fragment, container, false);
     }
 
-    // Interface to communicate with MainActivity for any items selected from list
-    public interface OnListItemSelectedListener{
-        public void onItemClicked(int position, Task task);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try{
-            listItemSelectorCallback = (OnListItemSelectedListener) activity;
-        }catch (ClassCastException e){
-            throw  new ClassCastException(activity.toString()+ " must implement OnListItemSelectedListener");
-        }
-    }
-
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
+
+        dataSource = new TaskDataSource(getActivity());
+        dataSource.open();
+        tasks.get(position).setItems(dataSource.getItemsForTask(tasks.get(position).getTask_id()));
+        dataSource.close();
+
         listItemSelectorCallback.onItemClicked(position, tasks.get(position));
     }
 }

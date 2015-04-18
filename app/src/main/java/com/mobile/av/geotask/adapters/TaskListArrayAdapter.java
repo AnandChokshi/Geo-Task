@@ -38,7 +38,6 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
         super(context, resource, taskList);
         this.context = context;
         this.taskList = taskList;
-        taskDataSource = new TaskDataSource(context);
     }
 
     @Override
@@ -101,6 +100,7 @@ public class TaskListArrayAdapter extends ArrayAdapter<Task> implements RemoveTa
     }
 
     public void listItemDelete(int taskId){
+        taskDataSource = new TaskDataSource(context);
         taskDataSource.open();
         taskDataSource.deleteTask(taskId);
         taskDataSource.close();

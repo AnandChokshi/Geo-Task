@@ -10,4 +10,13 @@
     <string name="title_activity_list_item_detail">ListItemDetailActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_task_detail">TaskDetail</string>
+    <string name="detail_view_expirationDate_label">Expiration Date</string>
+    <string name="detail_view_range_label">Range</string>
+    <string name="detail_view_item_label">Items</string>
+    <string name="detail_view_location_label">Locations</string>
+    <string name="detail_view_item_list_notesButton_label">Notes</string>
+    <string name="action_bar_task_detail_edit">Edit</string>
+    <string name="action_bar_task_detail_delete">Delete</string>
+    <string name="detail_view_repeat_label">Repeat</string>
+
 </resources>
