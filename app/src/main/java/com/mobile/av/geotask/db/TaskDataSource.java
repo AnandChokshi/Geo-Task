@@ -57,7 +57,7 @@ public class TaskDataSource {
     }
 
     /*
-    Return List of all Task ------------ TEST TO POPULATE LIST INITIAL
+    Return List of all Task
      */
     public List<Task> getAllFromTask() {
         Cursor cursor = taskDB.query(TaskDBOpenHelper.TASK_TABLE_NAME, task_All_Column, null, null, null, null, null);

@@ -25,7 +25,6 @@ public class ItemListArrayAdapter extends ArrayAdapter<Item> {
     private Context context;
     private ArrayList<Item> itemsList;
 
-
     public ItemListArrayAdapter(Context context, int resource, ArrayList<Item> itemsList) {
         super(context, resource, itemsList);
         this.context = context;
@@ -36,27 +35,6 @@ public class ItemListArrayAdapter extends ArrayAdapter<Item> {
     public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         convertView = layoutInflater.inflate(R.layout.detail_view_item_listview_row, null, true);
-
-        CheckBox status = (CheckBox) convertView.findViewById(R.id.detail_view_item_list_checkBox);
-        Button notesButton = (Button) convertView.findViewById(R.id.detail_view_item_list_notesButton);
-
-        status.setText(itemsList.get(position).getName());
-        if(itemsList.get(position).getStatus() == 0){
-            status.setChecked(false);
-        }else {
-            status.setChecked(true);
-        }
-        status.setClickable(false);
-
-        notesButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setTitle("NOTE");
-                builder.setMessage(itemsList.get(position).getNote());
-                builder.create().show();
-            }
-        });
 
         return convertView;
     }

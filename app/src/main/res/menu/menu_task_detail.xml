@@ -4,14 +4,14 @@
     tools:context="com.mobile.av.geotask.TaskDetailActivity">
 
     <item
-        android:id="@+id/task_detail_delete"
+        android:id="@+id/action_task_delete"
         android:title="@string/action_bar_task_detail_delete"
         android:icon="@mipmap/ic_action_delete_green"
         android:orderInCategory="100"
         app:showAsAction="always" />
 
     <item
-        android:id="@+id/task_detail_edit"
+        android:id="@+id/action_task_edit"
         android:title="@string/action_bar_task_detail_edit"
         android:icon="@mipmap/ic_action_edit_green"
         android:orderInCategory="99"

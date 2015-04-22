@@ -31,54 +31,51 @@ public class TaskDetailActivity extends ActionBarActivity implements Listener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_task_detail);
 
-        Bundle bundle = getIntent().getExtras();
-        taskPosition = bundle.getInt(TaskListArrayAdapter.POSITION);
-
-        ListItemDetailFragment listItemDetailFragment = new ListItemDetailFragment();
-        listItemDetailFragment.setArguments(bundle);
-
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.task_detail_activity, listItemDetailFragment);
-        transaction.commit();
-
-        task = bundle.getParcelable(".model.Task");
-
+        // Action Bar
         setTitle(Html.fromHtml("<font color='#12cdc2'> " + task.getTitle() + " </font>"));
         ActionBar actionBar = getSupportActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#FFFFFF")));
         actionBar.setElevation(10);
+
+        // Task Parcelable
+        Bundle bundle = getIntent().getExtras();
+        taskPosition = bundle.getInt(TaskListArrayAdapter.POSITION);
+        task = bundle.getParcelable(".model.Task");
+
+        // List Item Detail Fragment
+        ItemDetailFragment itemDetailFragment = new ItemDetailFragment();
+        itemDetailFragment.setArguments(bundle);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.task_detail_activity, itemDetailFragment);
+        transaction.commit();
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_task_detail, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.task_detail_edit) {
-            return true;
-        }
 
-        if (id == R.id.task_detail_delete){
+        switch (id) {
+            case R.id.action_task_delete:
+                RemoveTaskDialogFragment removeTaskDialogFragment = new RemoveTaskDialogFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString(TaskDBOpenHelper.TASK_TITLE, task.getTitle());
+                bundle.putInt(TaskListArrayAdapter.POSITION, taskPosition);
 
-            RemoveTaskDialogFragment removeTaskDialogFragment = new RemoveTaskDialogFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString(TaskDBOpenHelper.TASK_TITLE, task.getTitle());
-            bundle.putInt(TaskListArrayAdapter.POSITION, taskPosition);
-
-            removeTaskDialogFragment.setArguments(bundle);
-            removeTaskDialogFragment.setListener(this);
-            removeTaskDialogFragment.show(getFragmentManager(), REMOVE_DIALOG);
+                removeTaskDialogFragment.setArguments(bundle);
+                removeTaskDialogFragment.setListener(this);
+                removeTaskDialogFragment.show(getFragmentManager(), REMOVE_DIALOG);
+                break;
+            case R.id.action_task_edit:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
